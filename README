@@ -4,23 +4,22 @@ This is the library to attach OAuth and OpenID interface to your applications.
 
 Copyright (C) 2009 OGAKI, Kazutaka <ogakikz@jin.gr.jp>
 
+ 
 This program is copyrighted free software by OGAKI, Kazutaka. You can
-redistribute it and/or modify it under the same terms of Ruby's license;
-either the dual license version in 2003 (see the file RUBYS), or any later
-version.
-
-##############
+redistribute it and/or modify it under the General Public License version 2
+with some additional conditions (see the file COPYING).
 
 Application Architecture
 
+*Major subjects
 
-*provider (original contents' service provider)
-*user(End user: watching on browser screen)
-*consumer (Contents Aggregator)
+- provider (original contents' service provider)
+- user(End user: watching on browser screen)
+- consumer (Contents Aggregator)
 
-Any Communication are done via HTTP, and defined in OAuth/OpenID specs.
+Every communication are done via HTTP, and defined in OAuth/OpenID specs.
 HTTP request/responces are converted and arrived to Erlang ports. 
-This library would cover port part.
+This library would cover part of port functions.
 
 *Auhtentication
 
