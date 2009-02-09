@@ -1,0 +1,72 @@
+erlauth
+
+This is the library to attach OAuth and OpenID interface to your applications.
+
+Copyright (C) 2009 OGAKI, Kazutaka <ogakikz@jin.gr.jp>
+
+This program is copyrighted free software by OGAKI, Kazutaka. You can
+redistribute it and/or modify it under the same terms of Ruby's license;
+either the dual license version in 2003 (see the file RUBYS), or any later
+version.
+
+##############
+
+Application Architecture
+
+*provider
+*user
+*consumer
+
+Any Communication are done via HTTP, and defined in OAuth/OpenID specs.
+HTTP request/responces are converted and arrived to Erlang ports. 
+
+*Auhtentication
+
+user				consumer			provider
+|-----------------------------------request(null_session_key)----->|
+                                                                   |
+|<-------------------401 : authorization required -----------------|
+|
+|------------------------------------------- id, password -------->|
+                                                                   |
+|<-------------------OK : set session key -------------------------|
+|
+|----------------------------------request(valid_session_key)----->|
+                                                                   |
+|<-------------------200: authorization OK: contents---------------|
+
+
+*Authorization
+
+**initial case
+
+user				consumer			provider
+|------- Request(URL) ----------->|
+                                  |
+                                  |--- request(URL(content_id))--->|
+                                                                   |
+                                  |<-- 401: Auth requierd(token)---|
+                                  |
+|<-- 401: Auth requierd(token)----|
+|
+calculate hash(token)via session key and Nonce
+|
+|-Request(URL+hash))------------->|
+                                  |
+                                  |-request(URL+hash)------------->|
+                                                                   |
+                                  |<-- 200: OK : contents   -------|
+                                  |
+|<-- 200: OK : contents   --------|
+
+
+**Persistent proxying(delegation)
+
+In this case,
+-Nonce includes timout.
+-session key can be abandoned at any time
+-URL has range (for various request.. not including upper level reference)
+
+**Session key abandon (re-calculate)
+This can be done re-play initial Authentication with null_session_key.
+privider shall hold session_key as valid while correct id:password pair is given.
