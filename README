@@ -13,12 +13,14 @@ version.
 
 Application Architecture
 
-*provider
-*user
-*consumer
+
+*provider (original contents' service provider)
+*user(End user: watching on browser screen)
+*consumer (Contents Aggregator)
 
 Any Communication are done via HTTP, and defined in OAuth/OpenID specs.
 HTTP request/responces are converted and arrived to Erlang ports. 
+This library would cover port part.
 
 *Auhtentication
 
